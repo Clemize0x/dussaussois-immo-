@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------------------------------
+   Palette Dussaussois Immobilier
+   Vert forêt profond + or chaud + blancs chauds
+   ------------------------------------------------------------------------- */
+@theme {
+  --color-brand: #1a3a2a;
+  --color-brand-dark: #122517;
+  --color-brand-light: #2d5c3f;
+  --color-gold: #b07d3a;
+  --color-gold-light: #c89a50;
+  --color-surface: #f7f6f3;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #1c1917;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111310;
+    --foreground: #f5f4f1;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typographie de base */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Scroll fluide */
+html {
+  scroll-behavior: smooth;
+}
