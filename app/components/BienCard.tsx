@@ -44,17 +44,29 @@ export default function BienCard({ bien }: Props) {
           </div>
         )}
 
-        {/* Badges overlay */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${badge.className}`}>
-            {badge.label}
-          </span>
-          {nouveau && bien.statut === "disponible" && (
-            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[color:var(--color-brand)] text-white">
-              Nouveau
+        {/* Bien vendu : voile léger + tampon "VENDU" en haut à droite */}
+        {bien.statut === "vendu" ? (
+          <>
+            <div className="absolute inset-0 bg-stone-900/45" />
+            <div className="absolute top-3 right-3">
+              <span className="inline-block rotate-[-8deg] rounded-md border-2 border-white/90 bg-[color:var(--color-brand)]/95 px-4 py-1 text-base font-extrabold uppercase tracking-[0.2em] text-white shadow-lg">
+                Vendu
+              </span>
+            </div>
+          </>
+        ) : (
+          /* Badges overlay (disponible / sous compromis) */
+          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+            <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${badge.className}`}>
+              {badge.label}
             </span>
-          )}
-        </div>
+            {nouveau && bien.statut === "disponible" && (
+              <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[color:var(--color-brand)] text-white">
+                Nouveau
+              </span>
+            )}
+          </div>
+        )}
 
         {/* Type badge */}
         <div className="absolute bottom-3 right-3">

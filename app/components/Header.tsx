@@ -23,14 +23,14 @@ export default function Header() {
           {/* Logo / Nom */}
           <Link
             href="/"
-            className="flex items-center gap-2 shrink-0"
+            className="flex flex-col justify-center leading-none shrink-0"
             onClick={() => setMenuOpen(false)}
           >
             <span className="text-[color:var(--color-brand)] font-bold text-lg tracking-tight">
               Dussaussois
             </span>
-            <span className="hidden sm:inline text-stone-400 font-light text-lg">
-              Immobilier
+            <span className="text-stone-400 font-light text-sm tracking-wide mt-0.5">
+              Immobilier &amp; Assurance
             </span>
           </Link>
 
@@ -54,10 +54,10 @@ export default function Header() {
           {/* CTA desktop */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="tel:+33450000000"
+              href="tel:+33612443792"
               className="text-sm text-stone-500 hover:text-stone-900 transition-colors"
             >
-              04 50 00 00 00
+              +33 (0)6 12 44 37 92
             </a>
             <Link
               href="/contact"
@@ -103,10 +103,10 @@ export default function Header() {
               </Link>
             ))}
             <a
-              href="tel:+33450000000"
+              href="tel:+33612443792"
               className="px-3 py-2 text-sm text-stone-500"
             >
-              04 50 00 00 00
+              +33 (0)6 12 44 37 92
             </a>
           </nav>
         </div>

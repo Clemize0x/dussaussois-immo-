@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import { SiteHeader, SiteFooter } from "./components/SiteChrome";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +31,9 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${geist.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased bg-white text-stone-900">
-        <Header />
+        <SiteHeader />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <SiteFooter />
       </body>
     </html>
   );

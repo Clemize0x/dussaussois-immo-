@@ -7,6 +7,8 @@
  */
 
 import { Bien } from "./types";
+import { isSupabaseConfigured } from "./supabase/config";
+import { createSupabasePublicClient } from "./supabase/public";
 
 // ---------------------------------------------------------------------------
 // Données factices — vallée d'Abondance, Haute-Savoie
@@ -257,13 +259,65 @@ const BIENS_MOCK: Bien[] = [
 // API interne — à remplacer le jour J sans toucher au reste du site
 // ---------------------------------------------------------------------------
 
+// Conversion d'une ligne de la table `biens` (snake_case) vers le type `Bien`.
+export function rowToBien(r: Record<string, unknown>): Bien {
+  return {
+    id: String(r.id),
+    slug: String(r.slug),
+    titre: String(r.titre ?? ""),
+    transaction: r.transaction as Bien["transaction"],
+    type: r.type as Bien["type"],
+    statut: r.statut as Bien["statut"],
+    ville: String(r.ville ?? ""),
+    codePostal: String(r.code_postal ?? ""),
+    prix: r.prix === null || r.prix === undefined ? null : Number(r.prix),
+    surface: r.surface === null || r.surface === undefined ? null : Number(r.surface),
+    pieces: r.pieces === null || r.pieces === undefined ? null : Number(r.pieces),
+    chambres: r.chambres === null || r.chambres === undefined ? null : Number(r.chambres),
+    description: String(r.description ?? ""),
+    photos: Array.isArray(r.photos) ? (r.photos as string[]) : [],
+    reference: String(r.reference ?? ""),
+    dateCreation: String(r.date_creation ?? new Date().toISOString()),
+    aLaUne: Boolean(r.a_la_une),
+    latitude: r.latitude == null ? undefined : Number(r.latitude),
+    longitude: r.longitude == null ? undefined : Number(r.longitude),
+  };
+}
+
 export async function getBiens(): Promise<Bien[]> {
-  // Simulation d'un appel asynchrone (API, BDD…)
-  return BIENS_MOCK;
+  // Sans Supabase configuré : données factices (le site marche dès maintenant).
+  if (!isSupabaseConfigured()) return BIENS_MOCK;
+
+  const supabase = createSupabasePublicClient();
+  const { data, error } = await supabase
+    .from("biens")
+    .select("*")
+    .order("date_creation", { ascending: false });
+
+  if (error) {
+    console.error("[getBiens] Supabase:", error.message);
+    return [];
+  }
+  return (data ?? []).map(rowToBien);
 }
 
 export async function getBienBySlug(slug: string): Promise<Bien | null> {
-  return BIENS_MOCK.find((b) => b.slug === slug) ?? null;
+  if (!isSupabaseConfigured()) {
+    return BIENS_MOCK.find((b) => b.slug === slug) ?? null;
+  }
+
+  const supabase = createSupabasePublicClient();
+  const { data, error } = await supabase
+    .from("biens")
+    .select("*")
+    .eq("slug", slug)
+    .maybeSingle();
+
+  if (error) {
+    console.error("[getBienBySlug] Supabase:", error.message);
+    return null;
+  }
+  return data ? rowToBien(data) : null;
 }
 
 // ---------------------------------------------------------------------------

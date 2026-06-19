@@ -26,6 +26,7 @@ export interface Bien {
   photos: string[]; // URLs
   reference: string; // ex. "Mandat 46"
   dateCreation: string; // ISO 8601
+  aLaUne?: boolean; // "Bien du moment" : mis en avant sur la page d'accueil
   latitude?: number;
   longitude?: number;
 }
