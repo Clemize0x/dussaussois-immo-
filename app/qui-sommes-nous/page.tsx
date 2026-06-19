@@ -36,14 +36,20 @@ const VALEURS = [
   {
     titre: "Une agence familiale",
     texte: "Pas un réseau anonyme : deux personnes que vous connaissez par leur prénom, du premier appel au suivi dans la durée.",
+    // icône : groupe de personnes
+    icone: "M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-5a4 4 0 11-8 0 4 4 0 018 0z",
   },
   {
     titre: "Ancrés dans la vallée",
-    texte: "Établis à Abondance, nous connaissons le terrain, les biens et les besoins d'ici mieux que personne.",
+    texte: "Établis à Abondance, au cœur du domaine des Portes du Soleil, nous connaissons le terrain, les biens et les besoins d'ici mieux que personne.",
+    // icône : montagnes
+    icone: "M3 20l6-11 4 6 2-3 6 8H3z",
   },
   {
     titre: "Un seul interlocuteur",
     texte: "Immobilier et assurance sous le même toit : vous achetez votre bien avec nous, vous le protégez avec nous.",
+    // icône : poignée de main / interlocuteur unique
+    icone: "M12 14a4 4 0 100-8 4 4 0 000 8zM5 21a7 7 0 0114 0",
   },
 ];
 
@@ -106,7 +112,14 @@ export default function QuiSommesNousPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           {VALEURS.map((v) => (
             <div key={v.titre}>
-              <h3 className="text-lg font-semibold text-stone-900 mb-2">{v.titre}</h3>
+              <div className="flex items-center gap-2.5 mb-2">
+                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-brand)]/10 text-[color:var(--color-brand)]">
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={v.icone} />
+                  </svg>
+                </span>
+                <h3 className="text-lg font-semibold text-stone-900">{v.titre}</h3>
+              </div>
               <p className="text-stone-600 text-sm leading-relaxed">{v.texte}</p>
             </div>
           ))}

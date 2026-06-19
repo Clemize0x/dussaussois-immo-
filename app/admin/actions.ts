@@ -49,6 +49,15 @@ function num(value: FormDataEntryValue | null): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+// Rafraîchit toutes les pages publiques qui affichent des biens, après une
+// création / modification / suppression dans le back-office.
+function revalidatePublic() {
+  revalidatePath("/");              // accueil — section « Nos biens du moment »
+  revalidatePath("/biens");         // liste des biens
+  revalidatePath("/biens/[slug]", "page"); // toutes les fiches détaillées
+  revalidatePath("/admin");         // liste du back-office
+}
+
 function rowFromForm(formData: FormData) {
   const titre = String(formData.get("titre") ?? "").trim();
   const slugInput = String(formData.get("slug") ?? "").trim();
@@ -83,8 +92,7 @@ export async function createBien(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.from("biens").insert(rowFromForm(formData));
   if (error) throw new Error(error.message);
-  revalidatePath("/admin");
-  revalidatePath("/biens");
+  revalidatePublic();
   redirect("/admin");
 }
 
@@ -92,8 +100,7 @@ export async function updateBien(id: string, formData: FormData) {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.from("biens").update(rowFromForm(formData)).eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePath("/admin");
-  revalidatePath("/biens");
+  revalidatePublic();
   redirect("/admin");
 }
 
@@ -103,6 +110,5 @@ export async function deleteBien(formData: FormData) {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.from("biens").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePath("/admin");
-  revalidatePath("/biens");
+  revalidatePublic();
 }
