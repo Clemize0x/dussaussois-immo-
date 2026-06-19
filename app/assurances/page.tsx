@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import DevisForm from "./DevisForm";
 import { TYPES_ASSURANCE } from "./types-assurance";
@@ -182,7 +183,18 @@ export default function AssurancesPage() {
       {/* HERO                                                               */}
       {/* ----------------------------------------------------------------- */}
       <section className="relative overflow-hidden bg-[color:var(--color-brand)] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        {/* Photo de fond : homme de dos face aux Alpes (placeholder Unsplash, à remplacer par une vraie photo) */}
+        <Image
+          src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=2000&q=80"
+          alt="Homme de dos contemplant les montagnes des Alpes"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        {/* Dégradé vert pour garder le texte lisible et l'identité « assurance » */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--color-brand)]/95 via-[color:var(--color-brand)]/80 to-stone-900/45" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
           <div className="max-w-2xl">
             <p className="text-emerald-300 text-sm font-semibold tracking-widest uppercase mb-4">
               Courtage en assurance
